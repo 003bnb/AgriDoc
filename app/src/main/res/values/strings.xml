@@ -1,0 +1,26 @@
+<resources>
+    <!-- Nom de l'application -->
+    <string name="app_name">AgriDoc</string>
+
+    <!-- Titres des écrans principaux -->
+    <string name="title_dashboard">Tableau de bord</string>
+    <string name="title_camera">Diagnostic Caméra</string>
+    <string name="title_result">Résultat du Diagnostic</string>
+    <string name="title_historique">Historique des Diagnostics</string>
+
+    <!-- Noms des boutons de base -->
+    <string name="btn_scan">Scanner une plante</string>
+    <string name="btn_historique">Voir l\'historique</string>
+    <string name="btn_capture">Prendre une photo</string>
+    <string name="btn_reessayer">Réessayer</string>
+    <string name="btn_retour">Retour au tableau de bord</string>
+
+    <!--
+    ========================================================================
+    CONSIGNE POUR LES DÉVELOPPEURS :
+    Veuillez ajouter vos nouvelles chaînes de caractères uniquement CI-DESSOUS,
+    à la fin de ce fichier, pour limiter les conflits lors des merges Git.
+    ========================================================================
+    -->
+
+</resources>
