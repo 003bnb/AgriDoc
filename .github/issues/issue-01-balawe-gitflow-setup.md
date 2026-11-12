@@ -1,13 +1,13 @@
 # Issue #01 : Configuration Gitflow et Gestion du Dépôt
 
 - **Assigné à** : Balawe (Lead DevOps & Architecte)
-- **Branche** : `develop`
+- **Branche** : `devop` / `main`
 - **Priorité** : Haute (Bloquant)
 
 ## 📌 Description
-Initialiser et structurer la branche `develop` à partir de `main`. S'assurer que les fichiers temporaires de build et d'IDE sont bien ignorés par Git.
+Configurer la structure du dépôt Git, initialiser la branche `devop` à partir de `main`, et s'assurer que `.gitignore` exclut tous les fichiers temporaires de build et d'IDE.
 
 ## 📋 Critères d'Acceptation
-- [x] La branche `develop` est créée et poussée sur le dépôt distant.
-- [x] Le fichier `.gitignore` est configuré correctement à la racine du projet.
-- [x] Aucun fichier binaire de build n'est suivi dans Git.
+- [x] Branche `devop` créée et pushed sur le dépôt origin.
+- [x] `.gitignore` complet configuré à la racine du projet.
+- [x] Branches `main` et `devop` protégées contre les commits directs sans revue.

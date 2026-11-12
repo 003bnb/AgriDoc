@@ -23,4 +23,14 @@
     ========================================================================
     -->
 
+    <!-- Chaînes pour les maladies et diagnostics IA -->
+    <string name="maladie_mosaique_manioc">Mosaïque du manioc (Cassava Mosaic Virus)</string>
+    <string name="maladie_bacterienne">Brûlure bactérienne (Xanthomonas)</string>
+    <string name="plante_saine">Plante Saine (Aucune maladie détectée)</string>
+
+    <!-- Chaînes pour les traitements et recommandations -->
+    <string name="traitement_mosaique">Utiliser des boutures saines certifiées résistantes et détruire immédiatement les plants infectés.</string>
+    <string name="traitement_bacterien">Appliquer un traitement bactéricide à base de cuivre et ajuster l\'irrigation.</string>
+    <string name="traitement_preventif">Conserver les bonnes pratiques agricoles et effectuer un contrôle hebdomadaire.</string>
+
 </resources>
