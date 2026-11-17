@@ -8,7 +8,7 @@ Ce document définit l'attribution précise des tâches, la répartition des rô
 
 | Développeur | Rôle / Domaine | Branche Git Assignée | Fichiers Principaux gérés |
 | :--- | :--- | :--- | :--- |
-| **Balawe** | Lead DevOps & Architecte | `devop` / `main` | Gradle, `AndroidManifest.xml`, Assets TFLite |
+| **Balawe** | Lead DevOps & Architecte | `feature/balawe-devops` → `devop` (PR) | Audit Gradle, `AndroidManifest.xml`, assets TFLite, Gitflow |
 | **Adoum** | UI / UX & Dashboard | `feature/ui-dashboard` | `DashboardActivity.java`, `activity_dashboard.xml`, `activity_result.xml` |
 | **Moumoun** | Caméra & Capture (CameraX) | `feature/camera-camerax` | `CameraActivity.java`, `activity_camera.xml`, `PermissionManager.java` |
 | **Keumeka** | Lead IA (TensorFlow Lite) | `feature/ia-classification` | `ClassificationModel.java`, `Plante.java` |

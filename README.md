@@ -51,7 +51,7 @@ com.agridoc/
 
 | Développeur | Rôle / Domaine | Branche Git Assignée | Responsabilités Principales |
 | :--- | :--- | :--- | :--- |
-| **Balawe** | Lead DevOps & Architecte | `devop` / `main` | Architecture globale, configuration Gradle/Gitflow, intégration du modèle `.tflite`. |
+| **Balawe** | Lead DevOps & Architecte | `feature/balawe-devops` → `devop` (PR) | Architecture globale, coordination Gitflow, intégration du modèle `.tflite`. |
 | **Keumeka** | Lead IA | `feature/ia-classification` | Réseau de neurones TFLite, inférence et classification dans `ClassificationModel.java`. |
 | **Messi** | Data & Inférence | `feature/ia-classification` | Prétraitement d'images 224x224, conversion Bitmap/ByteBuffer dans `ImageUtils.java`. |
 | **Adoum** | UI / UX & Dashboard | `feature/ui-dashboard` | Conception des interfaces `activity_dashboard.xml`, `activity_result.xml` et navigation. |
