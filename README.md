@@ -8,6 +8,8 @@
 - **Public cible** : Agriculteurs, exploitants agricoles et techniciens de terrain.
 - **Contrainte Majeure** : **100% Hors-Ligne (Offline First)**. L'application exécute l'inférence IA directement sur le processeur du smartphone sans nécessiter de connexion Internet, garantissant une utilisation optimale même dans les zones rurales reculées.
 
+Le cadrage fonctionnel et technique destiné à l’équipe est disponible dans le [cahier des charges AgriDoc](CAHIER_DES_CHARGES.md).
+
 ---
 
 ## 🛠️ Stack Technique
