@@ -17,7 +17,7 @@ Ce document définit l'attribution précise des tâches, la répartition des rô
 
 ---
 
-## 📌 Liste des 14 Issues et Critères d'Acceptation
+## 📌 Liste des 15 Issues et Critères d'Acceptation
 
 ### 👤 1. Balawe (Lead DevOps & Architecte)
 - **Issue #01** : `issue-01-balawe-gitflow-setup.md` - Configuration Gitflow et gestion des branches (`devop` / `main`).
@@ -36,6 +36,7 @@ Ce document définit l'attribution précise des tâches, la répartition des rô
 ### 🧠 4. Keumeka (Lead IA) & Messi (Data)
 - **Issue #09** : `issue-09-keumeka-messi-tflite-inference.md` - Moteur d'inférence TFLite dans `ClassificationModel.java`.
 - **Issue #10** : `issue-10-keumeka-messi-image-utils.md` - Helper d'image `ImageUtils.java` (redimensionnement 224x224, rotation, ByteBuffer).
+- **Issue #15** : `issue-15-keumeka-messi-model-tflite.md` - Choix/export d'un modèle TFLite quantifié, contrat d'inférence et labels compatibles à transmettre à Balawe pour l'Issue #02.
 
 ### 💾 5. Sam (Persistance, MVVM & QA)
 - **Issue #11** : `issue-11-sam-historique-recyclerview.md` - `RecyclerView` dans `activity_historique.xml` et layout `item_historique.xml`.
