@@ -24,7 +24,9 @@
 
 ## 📂 Architecture du Projet
 
-Le projet suit une architecture moderne en couches (Clean Architecture / MVVM) répartie dans les packages suivants sous `com.agridoc` :
+L’architecture cible est organisée en couches (Clean Architecture / MVVM) sous les packages suivants de `com.agridoc` :
+
+À ce stade, la structure est amorcée, mais plusieurs composants restent des squelettes : les écrans sont vides, la classification TFLite renvoie un résultat simulé et le ViewModel d’historique n’est pas encore présent. Les issues de la feuille de route décrivent les travaux à réaliser.
 
 ```text
 com.agridoc/
