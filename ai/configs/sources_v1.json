@@ -1,0 +1,65 @@
+{
+  "_avertissement": "Registre de sources verifiees en Phase A. Aucune image n'est present localement. Les class_map sont des propositions de mapping a valider apres inspection visuelle (notamment pour distinguer ravageur visible et degat).",
+  "sources": {
+    "CCMT_RAW": {
+      "nom": "CCMT - Cashew, Cassava, Maize and Tomato (donnees brutes)",
+      "url": "https://data.mendeley.com/datasets/bwh3zbpkpv/1",
+      "article": "https://doi.org/10.1016/j.dib.2023.109306",
+      "licence": "CC BY 4.0",
+      "attribution_requise": true,
+      "root_hint": "Raw data/CCMT Dataset",
+      "images_brutes_annoncees": 24881,
+      "utiliser_augmente": false,
+      "raison_augmente": "Les 102976 images augmentees derivent des brutes : les melanger avec un split test creerait des fuites.",
+      "class_map": {
+        "cassava/bacterial blight": "MANIOC_MALADIE_BACTERIAL_BLIGHT",
+        "cassava/brown spot": "MANIOC_MALADIE_BROWN_SPOT",
+        "cassava/green mite": "MANIOC_RAVAGEUR_GREEN_MITE",
+        "cassava/healthy": "MANIOC_SAIN",
+        "cassava/mosaic": "MANIOC_MALADIE_MOSAIQUE",
+        "maize/fall armyworm": "MAIS_RAVAGEUR_FALL_ARMYWORM",
+        "maize/grasshopper": "MAIS_RAVAGEUR_GRASSHOPPER",
+        "maize/healthy": "MAIS_SAIN",
+        "maize/leaf beetle": "MAIS_RAVAGEUR_LEAF_BEETLE",
+        "maize/leaf blight": "MAIS_MALADIE_LEAF_BLIGHT",
+        "maize/leaf spot": "MAIS_MALADIE_LEAF_SPOT",
+        "maize/streak virus": "MAIS_MALADIE_STREAK_VIRUS",
+        "tomato/healthy": "TOMATE_SAIN",
+        "tomato/leaf blight": "TOMATE_MALADIE_LEAF_BLIGHT",
+        "tomato/leaf curl": "TOMATE_MALADIE_LEAF_CURL",
+        "tomato/septoria leaf spot": "TOMATE_MALADIE_SEPTORIA",
+        "tomato/verticillium wilt": "TOMATE_MALADIE_VERTICILLIUM_WILT"
+      }
+    },
+    "PLANTDOC": {
+      "nom": "PlantDoc - Cropped dataset",
+      "url": "https://github.com/pratikkayal/PlantDoc-Dataset",
+      "licence": "CC BY 4.0",
+      "attribution_requise": true,
+      "images_listees_api": 2579,
+      "class_map": {
+        "tomato early blight leaf": "TOMATE_MALADIE_EARLY_BLIGHT",
+        "tomato septoria leaf spot": "TOMATE_MALADIE_SEPTORIA",
+        "tomato leaf bacterial spot": "TOMATE_MALADIE_BACTERIAL_SPOT",
+        "tomato leaf late blight": "TOMATE_MALADIE_LEAF_BLIGHT",
+        "tomato leaf mosaic virus": "TOMATE_MALADIE_MOSAIC_VIRUS",
+        "tomato leaf yellow virus": "TOMATE_MALADIE_LEAF_CURL",
+        "tomato leaf": "TOMATE_SAIN",
+        "tomato mold leaf": "TOMATE_MALADIE_LEAF_MOLD",
+        "tomato two spotted spider mites leaf": "TOMATE_RAVAGEUR_SPIDER_MITE",
+        "corn gray leaf spot": "MAIS_MALADIE_GRAY_LEAF_SPOT",
+        "corn leaf blight": "MAIS_MALADIE_LEAF_BLIGHT",
+        "corn rust leaf": "MAIS_MALADIE_RUST"
+      },
+      "classes_a_ne_pas_utiliser": ["tomato two spotted spider mites leaf"],
+      "raison": "2 images en train, 0 en test : effectif insuffisant pour une classe diagnostique."
+    },
+    "PLANTVILLAGE": {
+      "nom": "PlantVillage",
+      "url": "https://github.com/spMohanty/PlantVillage-Dataset",
+      "licence": "NON VERIFIEE",
+      "utilisable": false,
+      "raison": "Usage commercial non confirme. Ne pas importer avant accord ecrit."
+    }
+  }
+}

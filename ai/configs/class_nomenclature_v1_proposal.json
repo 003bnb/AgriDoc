@@ -1,0 +1,48 @@
+{
+  "_avertissement": "PROPOSITION NON VALIDEE. Ceci n'est ni un dataset, ni une annotation, ni un labels.txt final. Aucune image n'a ete telechargee et aucun modele n'a ete entraine (voir ai/docs/PHASE_A_DATA_AUDIT.md).",
+  "version": "0.1-proposal",
+  "date": "2026-11-22",
+  "perimetre": {
+    "cultures": ["MANIOC", "TOMATE", "MAIS"],
+    "categories": ["SAIN", "MALADIE", "RAVAGEUR_VISIBLE", "DEGAT_RAVAGEUR", "CARENCE", "INCONNU", "NON_EXPLOITABLE"],
+    "hors_perimetre": ["AUTRES_CULTURES", "CBSD_MANIOC_RACINAIRE"]
+  },
+  "regles": [
+    "Une image ne peut etre acceptee que si une feuille ou une partie identifiable de plante est visible.",
+    "Un ravageur n'est annonce que s'il est suffisamment visible ; un degat non specifique ne justifie jamais une identification d'espece.",
+    "Toute classe sans effectif verifie reste en attente ; aucune classe fictive n'est ajoutee.",
+    "Les images d'une meme plante/parcelle/source ne doivent jamais etre separees entre train et test."
+  ],
+  "classes": [
+    {"id": "MANIOC_SAIN", "culture": "MANIOC", "categorie": "SAIN", "statut": "source_verifiee", "source": "CCMT", "images_source": 1193},
+    {"id": "MANIOC_MALADIE_BACTERIAL_BLIGHT", "culture": "MANIOC", "categorie": "MALADIE", "statut": "source_verifiee", "source": "CCMT", "images_source": 2614},
+    {"id": "MANIOC_MALADIE_BROWN_SPOT", "culture": "MANIOC", "categorie": "MALADIE", "statut": "source_verifiee", "source": "CCMT", "images_source": 1481},
+    {"id": "MANIOC_MALADIE_MOSAIQUE", "culture": "MANIOC", "categorie": "MALADIE", "statut": "source_verifiee", "source": "CCMT", "images_source": 1205},
+    {"id": "MANIOC_RAVAGEUR_GREEN_MITE", "culture": "MANIOC", "categorie": "RAVAGEUR_VISIBLE", "statut": "source_verifiee", "source": "CCMT", "images_source": 1015},
+    {"id": "MANIOC_CARENCE", "culture": "MANIOC", "categorie": "CARENCE", "statut": "collecte_locale_obligatoire", "source": null, "images_source": 0},
+    {"id": "MANIOC_DEGAT_RAVAGEUR", "culture": "MANIOC", "categorie": "DEGAT_RAVAGEUR", "statut": "a_redefinir_avec_agronome", "source": null, "images_source": 0},
+    {"id": "TOMATE_SAIN", "culture": "TOMATE", "categorie": "SAIN", "statut": "source_verifiee", "source": "CCMT/PlantDoc/PlantVillage", "images_source": 500},
+    {"id": "TOMATE_MALADIE_LEAF_BLIGHT", "culture": "TOMATE", "categorie": "MALADIE", "statut": "source_verifiee", "source": "CCMT/PlantDoc/PlantVillage", "images_source": 1301},
+    {"id": "TOMATE_MALADIE_SEPTORIA", "culture": "TOMATE", "categorie": "MALADIE", "statut": "source_verifiee", "source": "CCMT/PlantDoc/PlantVillage", "images_source": 2343},
+    {"id": "TOMATE_MALADIE_LEAF_CURL", "culture": "TOMATE", "categorie": "MALADIE", "statut": "source_verifiee", "source": "CCMT", "images_source": 518},
+    {"id": "TOMATE_MALADIE_VERTICILLIUM_WILT", "culture": "TOMATE", "categorie": "MALADIE", "statut": "source_verifiee", "source": "CCMT", "images_source": 773},
+    {"id": "TOMATE_RAVAGEUR_SPIDER_MITE", "culture": "TOMATE", "categorie": "RAVAGEUR_VISIBLE", "statut": "effectif_insuffisant", "source": "PlantDoc/PlantVillage", "images_source": 2},
+    {"id": "TOMATE_CARENCE", "culture": "TOMATE", "categorie": "CARENCE", "statut": "collecte_locale_obligatoire", "source": null, "images_source": 0},
+    {"id": "TOMATE_DEGAT_RAVAGEUR", "culture": "TOMATE", "categorie": "DEGAT_RAVAGEUR", "statut": "a_redefinir_avec_agronome", "source": null, "images_source": 0},
+    {"id": "MAIS_SAIN", "culture": "MAIS", "categorie": "SAIN", "statut": "source_verifiee", "source": "CCMT", "images_source": 208},
+    {"id": "MAIS_MALADIE_LEAF_BLIGHT", "culture": "MAIS", "categorie": "MALADIE", "statut": "source_verifiee", "source": "CCMT/PlantDoc", "images_source": 1006},
+    {"id": "MAIS_MALADIE_LEAF_SPOT", "culture": "MAIS", "categorie": "MALADIE", "statut": "source_verifiee", "source": "CCMT", "images_source": 1259},
+    {"id": "MAIS_MALADIE_STREAK_VIRUS", "culture": "MAIS", "categorie": "MALADIE", "statut": "source_verifiee", "source": "CCMT", "images_source": 1010},
+    {"id": "MAIS_RAVAGEUR_FALL_ARMYWORM", "culture": "MAIS", "categorie": "RAVAGEUR_VISIBLE", "statut": "source_verifiee", "source": "CCMT", "images_source": 285},
+    {"id": "MAIS_RAVAGEUR_GRASSHOPPER", "culture": "MAIS", "categorie": "RAVAGEUR_VISIBLE", "statut": "source_verifiee", "source": "CCMT", "images_source": 673},
+    {"id": "MAIS_RAVAGEUR_LEAF_BEETLE", "culture": "MAIS", "categorie": "RAVAGEUR_VISIBLE", "statut": "source_verifiee", "source": "CCMT", "images_source": 948},
+    {"id": "MAIS_CARENCE", "culture": "MAIS", "categorie": "CARENCE", "statut": "collecte_locale_obligatoire", "source": null, "images_source": 0},
+    {"id": "MAIS_DEGAT_RAVAGEUR", "culture": "MAIS", "categorie": "DEGAT_RAVAGEUR", "statut": "a_redefinir_avec_agronome", "source": null, "images_source": 0},
+    {"id": "GLOBAL_INCONNU", "culture": "GLOBAL", "categorie": "INCONNU", "statut": "a_generer", "source": null, "images_source": 0},
+    {"id": "GLOBAL_NON_EXPLOITABLE", "culture": "GLOBAL", "categorie": "NON_EXPLOITABLE", "statut": "a_generer", "source": null, "images_source": 0}
+  ],
+  "notes": {
+    "images_source": "Effectif annonce par la source (CCMT : article table 2). Ce n'est pas un nombre d'images present localement.",
+    "prochaine_etape": "Phase B : figer l'architecture de classification (multi-classes vs hierarchique) avant de generer le labels.txt final."
+  }
+}
