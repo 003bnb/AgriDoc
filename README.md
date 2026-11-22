@@ -8,6 +8,8 @@
 - **Public cible** : Agriculteurs, exploitants agricoles et techniciens de terrain.
 - **Contrainte Majeure** : **100% Hors-Ligne (Offline First)**. L'application exécute l'inférence IA directement sur le processeur du smartphone sans nécessiter de connexion Internet, garantissant une utilisation optimale même dans les zones rurales reculées.
 
+Le cadrage fonctionnel et technique destiné à l’équipe est disponible dans le [cahier des charges AgriDoc](CAHIER_DES_CHARGES.md).
+
 ---
 
 ## 🛠️ Stack Technique
@@ -24,7 +26,9 @@
 
 ## 📂 Architecture du Projet
 
-Le projet suit une architecture moderne en couches (Clean Architecture / MVVM) répartie dans les packages suivants sous `com.agridoc` :
+L’architecture cible est organisée en couches (Clean Architecture / MVVM) sous les packages suivants de `com.agridoc` :
+
+À ce stade, la structure est amorcée, mais plusieurs composants restent des squelettes : les écrans sont vides, la classification TFLite renvoie un résultat simulé et le ViewModel d’historique n’est pas encore présent. Les issues de la feuille de route décrivent les travaux à réaliser.
 
 ```text
 com.agridoc/
@@ -51,7 +55,7 @@ com.agridoc/
 
 | Développeur | Rôle / Domaine | Branche Git Assignée | Responsabilités Principales |
 | :--- | :--- | :--- | :--- |
-| **Balawe** | Lead DevOps & Architecte | `devop` / `main` | Architecture globale, configuration Gradle/Gitflow, intégration du modèle `.tflite`. |
+| **Balawe** | Lead DevOps & Architecte | `feature/balawe-devops` → `devop` (PR) | Architecture globale, coordination Gitflow, intégration du modèle `.tflite`. |
 | **Keumeka** | Lead IA | `feature/ia-classification` | Réseau de neurones TFLite, inférence et classification dans `ClassificationModel.java`. |
 | **Messi** | Data & Inférence | `feature/ia-classification` | Prétraitement d'images 224x224, conversion Bitmap/ByteBuffer dans `ImageUtils.java`. |
 | **Adoum** | UI / UX & Dashboard | `feature/ui-dashboard` | Conception des interfaces `activity_dashboard.xml`, `activity_result.xml` et navigation. |

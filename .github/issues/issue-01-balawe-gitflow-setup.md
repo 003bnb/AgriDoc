@@ -1,7 +1,7 @@
 # Issue #01 : Configuration Gitflow et Gestion du Dépôt
 
 - **Assigné à** : Balawe (Lead DevOps & Architecte)
-- **Branche** : `devop` / `main`
+- **Branche de travail** : `feature/balawe-devops` → `devop` par Pull Request
 - **Priorité** : Haute (Bloquant)
 
 ## 📌 Description
