@@ -33,4 +33,10 @@
     <string name="traitement_bacterien">Appliquer un traitement bactéricide à base de cuivre et ajuster l\'irrigation.</string>
     <string name="traitement_preventif">Conserver les bonnes pratiques agricoles et effectuer un contrôle hebdomadaire.</string>
 
+    <!-- Chaînes pour le module Caméra (Moumoun - Issues #06, #07, #08) -->
+    <string name="camera_permission_required">L\'accès à la caméra est nécessaire pour scanner et diagnostiquer les plantes.</string>
+    <string name="camera_permission_denied_message">Permission caméra refusée. Impossible d\'effectuer le diagnostic sans caméra.</string>
+    <string name="camera_capture_error">Erreur lors de la capture de la photo. Veuillez réessayer.</string>
+    <string name="camera_instruction_hint">Cadrez la feuille au centre de l\'écran</string>
+
 </resources>
