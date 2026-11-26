@@ -24,7 +24,7 @@ Définir une stratégie de données complète pour entraîner un modèle de clas
 | Catégories disponibles | Maladies (multiples par plante), plantes saines |
 | Pertinence pour AgriDoc | Très élevée pour les maladies de la Tomate et du Maïs ; le manioc n'est pas couvert par cette source |
 | Limites | Peu ou pas de catégories "ravageurs" ou "carences nutritionnelles" ; focus sur les maladies fongiques, virales, bactériennes |
-| Licence | À vérifier pour PlantVillage ; PlantDoc est sous licence CC-BY-4.0 (confirmée) |
+| Licence | À vérifier pour un usage commercial (aucune licence détectée dans le dépôt) |
 | Risque de fuite | Certaines images peuvent apparaître dans d'autres datasets publics (déduplication nécessaire) |
 
 ### 2.2 PlantDoc
@@ -35,7 +35,7 @@ Définir une stratégie de données complète pour entraîner un modèle de clas
 | Catégories disponibles | Maladies, plantes saines |
 | Pertinence pour AgriDoc | Moyenne à élevée pour la Tomate et le Maïs ; le manioc n'est pas couvert par cette source |
 | Limites | Couverture inégale selon les cultures ; moins de classes que PlantVillage |
-| Licence | CC-BY-4.0 confirmée pour PlantDoc ; à vérifier pour PlantVillage |
+| Licence | CC-BY-4.0 confirmée dans l'audit pour PlantDoc ; les conditions applicables aux images individuelles doivent rester traçables ; ne pas présenter cette licence comme une autorisation commerciale universelle sans vérification |
 | Risque de fuite | À évaluer par déduplication |
 
 ### 2.3 CCMT (Cassava Cloud Monitoring Tool ou équivalent cassava-focused)

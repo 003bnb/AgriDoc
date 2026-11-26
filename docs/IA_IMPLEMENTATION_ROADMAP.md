@@ -203,7 +203,7 @@ Définir la stratégie de modélisation IA pour AgriDoc V1 et le plan d'impléme
 | Aucun dataset téléchargé ; sources vérifiées, comptage définitif incomplet | Bloquant | Impossible d'entraîner un modèle tant que le comptage par feuille n'est pas établi | Télécharger PlantVillage, appliquer `leaf_grouping` et compter les images par classe |
 | Aucun modèle .tflite dans assets/ | Bloquant | L'inférence ne peut pas être intégrée | Issue #15 doit être livrée par Keumeka/Messi |
 | Licence PlantVillage non vérifiée | Majeur | Risque juridique pour la distribution | Vérifier avant tout entraînement |
-| Classes ravageurs/carences non couvertes par PlantVillage | Majeur | 9 classes nécessitent une collecte locale | Planifier la collecte camerounaise tôt |
+| Classes ravageurs/carences non couvertes par PlantVillage | Majeur | 11 classes nécessitent une collecte locale | Planifier la collecte camerounaise tôt |
 | CBSD (manioc) principalement racinaire | Majeur | Incompatible avec le périmètre photo-feuille | Exclue de V1 (statut 5) |
 | Manioc absent de PlantVillage et de PlantDoc | Majeur | Le manioc ne peut pas être couvert par les sources publiques vérifiées | Collecte camerounaise obligatoire pour toutes les classes du manioc |
 | Seuil de confiance non défini | Majeur | Impossible de gérer l'incertitude honnêtement | Déterminer par courbe précision/rappel sur validation |
