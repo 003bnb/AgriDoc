@@ -22,9 +22,9 @@ Définir une stratégie de données complète pour entraîner un modèle de clas
 |---------|--------|
 | Cultures disponibles | Tomate et Maïs confirmés dans les données examinées ; manioc absent des dossiers `raw/` consultés |
 | Catégories disponibles | Maladies (multiples par plante), plantes saines |
-| Pertinence pour AgriDoc | Très élevée pour les maladies des trois cultures cibles |
+| Pertinence pour AgriDoc | Très élevée pour les maladies de la Tomate et du Maïs ; le manioc n'est pas couvert par cette source |
 | Limites | Peu ou pas de catégories "ravageurs" ou "carences nutritionnelles" ; focus sur les maladies fongiques, virales, bactériennes |
-| Licence | À vérifier (généralement libre pour recherche, à confirmer pour usage commercial dans une application) |
+| Licence | À vérifier pour PlantVillage ; PlantDoc est sous licence CC-BY-4.0 (confirmée) |
 | Risque de fuite | Certaines images peuvent apparaître dans d'autres datasets publics (déduplication nécessaire) |
 
 ### 2.2 PlantDoc
@@ -33,19 +33,19 @@ Définir une stratégie de données complète pour entraîner un modèle de clas
 |---------|--------|
 | Cultures disponibles | Tomate et Maïs confirmés dans les données examinées ; manioc absent des dossiers `train/` et `test/` consultés |
 | Catégories disponibles | Maladies, plantes saines |
-| Pertinence pour AgriDoc | Moyenne à élevée ; images de terrain (pas uniquement studio) |
+| Pertinence pour AgriDoc | Moyenne à élevée pour la Tomate et le Maïs ; le manioc n'est pas couvert par cette source |
 | Limites | Couverture inégale selon les cultures ; moins de classes que PlantVillage |
-| Licence | À vérifier |
+| Licence | CC-BY-4.0 confirmée pour PlantDoc ; à vérifier pour PlantVillage |
 | Risque de fuite | À évaluer par déduplication |
 
 ### 2.3 CCMT (Cassava Cloud Monitoring Tool ou équivalent cassava-focused)
 
 | Élément | Détail |
 |---------|--------|
-| Cultures disponibles | Manioc principalement |
-| Catégories disponibles | Maladies du manioc (mosaïque, brunissement, etc.) |
-| Pertinence pour AgriDoc | Élevée pour le manioc, spécifique à une culture |
-| Limites | Uniquement manioc ; pas de tomate ni maïs |
+| Cultures disponibles | Aucune donnée vérifiée (source non identifiée) |
+| Catégories disponibles | Aucune catégorie vérifiée |
+| Pertinence pour AgriDoc | Non établie (source non identifiée) |
+| Limites | Source non identifiée ; aucune donnée disponible ; ne pas utiliser comme source planifiée |
 | Licence | À vérifier |
 | Risque de fuite | À évaluer |
 
@@ -84,8 +84,8 @@ Où :
 | Classe | Type | Description | Statut des données |
 |--------|------|-------------|-------------------|
 | MANIOC_SAIN | Plante saine | Feuille sans symptôme visible | À collecter / valider |
-| MANIOC_MALADIE_MOSAIQUE | Maladie | Mosaïque du manioc (Cassava Mosaic Virus) | Source probable : PlantVillage |
-| MANIOC_MALADIE_BRUNISSEMENT | Maladie | Brunissement du manioc (CBSD) | À collecter / valider |
+| MANIOC_MALADIE_MOSAIQUE | Maladie | Mosaïque du manioc (Cassava Mosaic Virus) | Collecte camerounaise obligatoire (manioc absent de PlantVillage et de PlantDoc) |
+| MANIOC_MALADIE_BRUNISSEMENT | Maladie | Brunissement du manioc (CBSD) | Exclu de V1 (symptômes principalement racinaires) |
 | MANIOC_CARENCE | Carence | Carence nutritionnelle (nutriment à spécifier avec un agronome) | À collecter / valider |
 | MANIOC_RAVAGEUR | Ravageur | Insecte visible sur la feuille (espèce à préciser) | À collecter / valider |
 | MANIOC_DEGAT_RAVAGEUR | Dégâts ravageur | Trous, déformations ou galeries visibles | À collecter / valider |

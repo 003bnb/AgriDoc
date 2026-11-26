@@ -100,7 +100,7 @@ Définir la stratégie de modélisation IA pour AgriDoc V1 et le plan d'impléme
 | Tâche | Objectif | Livrable | Dépendance | Responsable | Critère de validation |
 |-------|----------|----------|------------|-------------|----------------------|
 | 0.1 | Examiner complètement leaf-map.json de PlantVillage | Liste exhaustive des classes Manioc/Tomate/Maïs avec comptage d'images | Accès au dépôt PlantVillage | Keumeka / Messi | Nombre d'images par classe documenté |
-| 0.2 | Vérifier la présence de Manioc et Maïs dans PlantVillage | Confirmation ou infirmation de la présence de ces cultures | Résultat 0.1 | Keumeka / Messi | Présence confirmée ou infirmée pour chaque culture |
+| 0.2 | Confirmer l'absence du manioc et la présence du Maïs dans PlantVillage | Manioc absent des dossiers consultés ; Maïs confirmé (4 classes dans `raw/`) | Résultat 0.1 | Keumeka / Messi | Présence confirmée ou infirmée pour chaque culture, avec comptage définitif à compléter via `leaf_grouping` |
 | 0.3 | Vérifier la licence d'utilisation commerciale de PlantVillage | Document de licence | Site de PlantVillage / auteurs | Keumeka / Messi | Licence documentée et compatible |
 | 0.4 | Définir la liste finale des classes V1 | Liste validée des classes entraînables | Résultats 0.1 à 0.3 | Keumeka / Messi + référent agronomique | Liste figée, pas de classe fictive |
 | 0.5 | Planifier la collecte camerounaise pour les classes manquantes | Plan de collecte (régions, cultures, classes, nombre d'images cibles) | Résultat 0.4 | Keumeka / Messi + référent agronomique | Plan documenté avec zones et calendriers |
@@ -200,7 +200,7 @@ Définir la stratégie de modélisation IA pour AgriDoc V1 et le plan d'impléme
 
 | Risque | Gravité | Impact | Mitigation |
 |--------|---------|--------|------------|
-| Aucun dataset vérifié (pas de comptage d'images) | Bloquant | Impossible d'entraîner un modèle | Télécharger PlantVillage et compter les images par classe |
+| Aucun dataset téléchargé ; sources vérifiées, comptage définitif incomplet | Bloquant | Impossible d'entraîner un modèle tant que le comptage par feuille n'est pas établi | Télécharger PlantVillage, appliquer `leaf_grouping` et compter les images par classe |
 | Aucun modèle .tflite dans assets/ | Bloquant | L'inférence ne peut pas être intégrée | Issue #15 doit être livrée par Keumeka/Messi |
 | Licence PlantVillage non vérifiée | Majeur | Risque juridique pour la distribution | Vérifier avant tout entraînement |
 | Classes ravageurs/carences non couvertes par PlantVillage | Majeur | 9 classes nécessitent une collecte locale | Planifier la collecte camerounaise tôt |
@@ -242,8 +242,8 @@ Définir la stratégie de modélisation IA pour AgriDoc V1 et le plan d'impléme
 
 | Information | Impact | Vérification nécessaire |
 |-------------|--------|------------------------|
-| Nombre d'images par classe dans PlantVillage (notamment Manioc et Maïs) | Détermine quelles classes sont entraînables | Télécharger et compter |
-| Présence effective de Manioc et Maïs dans PlantVillage | Détermine si ces cultures peuvent être couvertes par des données publiques | Examen complet de leaf-map.json ou dossier raw/ |
+| Nombre définitif d'images par classe dans PlantVillage | Détermine quelles classes sont entraînables | Télécharger, appliquer `leaf_grouping` et compter par feuille |
+| Présence effective du Manioc et du Maïs dans PlantVillage | Manioc absent confirmé ; Maïs confirmé (4 classes) ; comptage définitif à établir | Examen complet de `raw/` et du `leaf_grouping` |
 | Licence d'utilisation commerciale des datasets | Impacte la distribution de l'application | Vérifier auprès de chaque source |
 | Référent agronomique camerounais disponible | Bloquant pour les classes ravageurs et carences | Recruter |
 | Budget et délai de collecte terrain | Impacte le planning | Planifier avec le chef de projet |
