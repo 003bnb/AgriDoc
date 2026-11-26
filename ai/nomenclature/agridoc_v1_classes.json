@@ -1,0 +1,51 @@
+{
+  "version": "1.0",
+  "status": "proposition non validée",
+  "total_classes": 29,
+  "statuses": {
+    "validated_for_experimentation": 3,
+    "insufficient_data": 14,
+    "local_collection_required": 11,
+    "excluded_from_v1": 1
+  },
+  "classes": [
+    { "id": "MAIS_SAIN", "culture": "MAIS", "category": "sain", "status": "validated_for_experimentation" },
+    { "id": "MAIS_MALADIE_ROUILLE", "culture": "MAIS", "category": "maladie", "status": "validated_for_experimentation" },
+    { "id": "MAIS_MALADIE_TACHE_NORD", "culture": "MAIS", "category": "maladie", "status": "validated_for_experimentation" },
+
+    { "id": "MANIOC_INCONNU", "culture": "MANIOC", "category": "inconnu", "status": "insufficient_data" },
+    { "id": "TOMATE_SAIN", "culture": "TOMATE", "category": "sain", "status": "insufficient_data" },
+    { "id": "TOMATE_MALADIE_MILDIEU", "culture": "TOMATE", "category": "maladie", "status": "insufficient_data" },
+    { "id": "TOMATE_MALADIE_TACHE_BACTERIENNE", "culture": "TOMATE", "category": "maladie", "status": "insufficient_data" },
+    { "id": "TOMATE_MALADIE_SEPTORIA", "culture": "TOMATE", "category": "maladie", "status": "insufficient_data" },
+    { "id": "TOMATE_MALADIE_YELLOW_LEAF_CURL", "culture": "TOMATE", "category": "maladie", "status": "insufficient_data" },
+    { "id": "TOMATE_MALADIE_LEAF_MOLD", "culture": "TOMATE", "category": "maladie", "status": "insufficient_data" },
+    { "id": "TOMATE_MALADIE_TARGET_SPOT", "culture": "TOMATE", "category": "maladie", "status": "insufficient_data" },
+    { "id": "TOMATE_MALADIE_EARLY_BLIGHT", "culture": "TOMATE", "category": "maladie", "status": "insufficient_data" },
+    { "id": "TOMATE_RAVAGEUR_SPIDER_MITE", "culture": "TOMATE", "category": "ravageur", "status": "insufficient_data" },
+    { "id": "TOMATE_INCONNU", "culture": "TOMATE", "category": "inconnu", "status": "insufficient_data" },
+    { "id": "MAIS_INCONNU", "culture": "MAIS", "category": "inconnu", "status": "insufficient_data" },
+    { "id": "GLOBAL_INCONNU", "culture": "GLOBAL", "category": "inconnu", "status": "insufficient_data" },
+    { "id": "GLOBAL_NON_EXPLOITABLE", "culture": "GLOBAL", "category": "inconnu", "status": "insufficient_data" },
+
+    { "id": "MANIOC_SAIN", "culture": "MANIOC", "category": "sain", "status": "local_collection_required" },
+    { "id": "MANIOC_MALADIE_MOSAIQUE", "culture": "MANIOC", "category": "maladie", "status": "local_collection_required" },
+    { "id": "MANIOC_CARENCE", "culture": "MANIOC", "category": "carence", "status": "local_collection_required" },
+    { "id": "MANIOC_RAVAGEUR", "culture": "MANIOC", "category": "ravageur", "status": "local_collection_required" },
+    { "id": "MANIOC_DEGAT_RAVAGEUR", "culture": "MANIOC", "category": "degat_ravageur", "status": "local_collection_required" },
+    { "id": "TOMATE_RAVAGEUR", "culture": "TOMATE", "category": "ravageur", "status": "local_collection_required" },
+    { "id": "TOMATE_DEGAT_RAVAGEUR", "culture": "TOMATE", "category": "degat_ravageur", "status": "local_collection_required" },
+    { "id": "TOMATE_CARENCE", "culture": "TOMATE", "category": "carence", "status": "local_collection_required" },
+    { "id": "MAIS_RAVAGEUR", "culture": "MAIS", "category": "ravageur", "status": "local_collection_required" },
+    { "id": "MAIS_DEGAT_RAVAGEUR", "culture": "MAIS", "category": "degat_ravageur", "status": "local_collection_required" },
+    { "id": "MAIS_CARENCE", "culture": "MAIS", "category": "carence", "status": "local_collection_required" },
+
+    { "id": "MANIOC_MALADIE_BRUNISSEMENT", "culture": "MANIOC", "category": "maladie", "status": "excluded_from_v1" }
+  ],
+  "notes": [
+    "Aucune classe fictive n'est créée.",
+    "Les classes ravageurs et carences sans espèce ou nutriment précisés restent incertaines.",
+    "MANIOC_MALADIE_BRUNISSEMENT est exclue de V1 car ses symptômes sont principalement racinaires.",
+    "Les comptages d'images sont préliminaires et doivent être confirmés par leaf_grouping avant entraînement."
+  ]
+}
