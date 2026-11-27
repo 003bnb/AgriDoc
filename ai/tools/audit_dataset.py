@@ -10,6 +10,11 @@ Il produit un rapport JSON décrivant :
 - les métadonnées manquantes ou invalides ;
 - la validation des classes selon la nomenclature ;
 - les fuites possibles entre train, validation et test.
+
+Sécurité :
+- les liens symboliques ne sont pas suivis ;
+- les chemins de manifeste sont résolus et doivent rester dans la racine du dataset ;
+- les images sont décodées complètement avant d'être considérées comme valides.
 """
 
 from __future__ import annotations
@@ -23,7 +28,7 @@ import sys
 from collections import Counter, defaultdict
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
 try:
     from PIL import Image
@@ -45,7 +50,7 @@ REQUIRED_METADATA_FIELDS = {
 }
 
 ALLOWED_VALUES = {
-    "source": {"PlantVillage", "PlantDoc", "collecte_camerounaise", "autre"},
+    "source": {"PlantVillage", "PlantDoc", "collecte_camerounaise"},
     "culture": {"MANIOC", "TOMATE", "MAIS", "GLOBAL"},
     "type_probleme": {"MALADIE", "RAVAGEUR", "DEGAT_RAVAGEUR", "CARENCE", "SAIN", "INCONNU"},
     "qualite_image": {"EXCELLENTE", "BONNE", "MOYENNE", "EXPLOITABLE_DIFFICILE"},
@@ -69,6 +74,8 @@ class ImageRecord:
     readable: bool = True
     error: Optional[str] = None
     average_hash: Optional[str] = None
+    hash_computed: bool = False
+    hash_error: Optional[str] = None
 
 
 @dataclass
@@ -77,7 +84,10 @@ class AuditReport:
     nomenclature_path: Optional[str]
     image_count: int = 0
     readable_image_count: int = 0
+    validated_image_count: int = 0
+    skipped_symlink_count: int = 0
     unreadable_images: List[Dict[str, str]] = field(default_factory=list)
+    hash_errors: List[Dict[str, str]] = field(default_factory=list)
     exact_duplicate_groups: List[List[str]] = field(default_factory=list)
     visual_duplicate_groups: List[List[str]] = field(default_factory=list)
     metadata_path: Optional[str] = None
@@ -100,13 +110,28 @@ def sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
+def _read_image(path: Path) -> Tuple[int, int, Optional[str]]:
+    """Décode réellement l'image. Lève une exception si elle est invalide ou tronquée."""
+    with Image.open(path) as image:
+        image.verify()
+    with Image.open(path) as image:
+        image.load()
+        return image.size[0], image.size[1], image.format
+
+
 def average_hash(path: Path, size: int = 16) -> Optional[str]:
     """Calcule un hash perceptuel moyen simple, sans dépendance externe."""
     try:
+        width, height, _ = _read_image(path)
         with Image.open(path) as image:
             grayscale = image.convert("L").resize((size, size), Image.Resampling.LANCZOS)
-            pixels = list(grayscale.getdata())
+            try:
+                pixels = list(grayscale.get_flattened_data())
+            except AttributeError:
+                pixels = list(grayscale.getdata())
     except Exception:
+        return None
+    if not pixels:
         return None
     average = sum(pixels) / len(pixels)
     bits = "".join("1" if pixel >= average else "0" for pixel in pixels)
@@ -157,7 +182,23 @@ def load_metadata(path: Path) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]
     return records, errors
 
 
-def validate_record(record: Dict[str, Any], allowed_classes: Dict[str, str]) -> List[str]:
+def resolve_manifest_path(raw_path: Any, dataset_root: Path) -> Path:
+    """Résout un chemin de manifeste en garantissant qu'il reste dans la racine."""
+    if not isinstance(raw_path, str) or not raw_path.strip():
+        raise ValueError("chemin d'image vide")
+    candidate = Path(raw_path)
+    if candidate.is_absolute() or candidate.drive or candidate.root:
+        raise ValueError("chemin absolu refusé: {!r}".format(raw_path))
+    if any(part == ".." for part in candidate.parts):
+        raise ValueError("traversée hors racine refusée: {!r}".format(raw_path))
+    root_resolved = dataset_root.resolve()
+    resolved = (dataset_root / candidate).resolve()
+    if not resolved.is_relative_to(root_resolved):
+        raise ValueError("chemin hors de la racine refusé: {!r}".format(raw_path))
+    return resolved
+
+
+def validate_record(record: Dict[str, Any], allowed_classes: Dict[str, str], dataset_root: Optional[Path] = None) -> List[str]:
     problems: List[str] = []
     for field_name in sorted(REQUIRED_METADATA_FIELDS):
         if record.get(field_name) in (None, ""):
@@ -176,6 +217,21 @@ def validate_record(record: Dict[str, Any], allowed_classes: Dict[str, str]) -> 
     if classe and allowed_classes and classe not in allowed_classes:
         problems.append("classe absente de la nomenclature: {!r}".format(classe))
 
+    if dataset_root is not None:
+        image_name = record.get("fichier_image") or record.get("image_path") or record.get("path")
+        if image_name:
+            try:
+                resolved = resolve_manifest_path(image_name, dataset_root)
+            except ValueError as exc:
+                problems.append(str(exc))
+            else:
+                if not resolved.exists():
+                    problems.append("fichier image introuvable: {}".format(resolved))
+                elif resolved.is_symlink():
+                    resolved_target = resolved.resolve()
+                    if not resolved_target.is_relative_to(dataset_root.resolve()):
+                        problems.append("lien symbolique hors de la racine refusé: {}".format(resolved))
+
     return problems
 
 
@@ -193,11 +249,23 @@ def audit_dataset(
     if not dataset_root.exists() or not dataset_root.is_dir():
         report.notes.append("Racine de dataset absente ou non répertoire : {}".format(dataset_root))
         return report
+    if dataset_root.is_symlink():
+        report.notes.append("La racine du dataset est un lien symbolique : parcours refusé.")
+        return report
 
-    image_paths = sorted(
-        path for path in dataset_root.rglob("*")
-        if path.is_file() and path.suffix.lower() in IMAGE_EXTENSIONS
-    )
+    image_paths: List[Path] = []
+    skipped_symlinks = 0
+    for dirpath, dirnames, filenames in os.walk(dataset_root, followlinks=False):
+        # Empêche os.walk de descendre dans des répertoires symboliques.
+        dirnames[:] = [name for name in dirnames if not (Path(dirpath) / name).is_symlink()]
+        for filename in filenames:
+            path = Path(dirpath) / filename
+            if path.is_symlink():
+                skipped_symlinks += 1
+                continue
+            if path.is_file() and path.suffix.lower() in IMAGE_EXTENSIONS:
+                image_paths.append(path)
+    image_paths.sort()
 
     records_by_path: Dict[str, ImageRecord] = {}
     sha_groups: Dict[str, List[str]] = defaultdict(list)
@@ -207,12 +275,18 @@ def audit_dataset(
         record = ImageRecord(path=str(path), sha256="", size_bytes=path.stat().st_size)
         try:
             record.sha256 = sha256_file(path)
-            with Image.open(path) as image:
-                record.width, record.height = image.size
-                record.format = image.format
+            width, height, image_format = _read_image(path)
+            record.width = width
+            record.height = height
+            record.format = image_format
             record.average_hash = average_hash(path)
-            sha_groups[record.sha256].append(str(path))
-            if record.average_hash is not None:
+            if record.average_hash is None:
+                record.hash_computed = False
+                record.hash_error = "calcul du hash perceptuel impossible"
+                report.hash_errors.append({"path": str(path), "error": record.hash_error})
+            else:
+                record.hash_computed = True
+                sha_groups[record.sha256].append(str(path))
                 phash_groups[record.average_hash].append(str(path))
         except Exception as exc:  # noqa: BLE001 - audit non destructif
             record.readable = False
@@ -222,30 +296,40 @@ def audit_dataset(
         report.image_count += 1
         if record.readable:
             report.readable_image_count += 1
+        if record.readable and record.hash_computed:
+            report.validated_image_count += 1
 
+    report.skipped_symlink_count = skipped_symlinks
     report.exact_duplicate_groups = [group for group in sha_groups.values() if len(group) > 1]
 
-    # Doublons visuels probables : comparaison par distance de Hamming.
-    readable_hashes = [(path, rec.average_hash) for path, rec in records_by_path.items() if rec.average_hash]
-    visual_groups: List[List[str]] = []
-    used = set()
-    for i, (path_i, hash_i) in enumerate(readable_hashes):
-        if path_i in used:
-            continue
-        group = [path_i]
-        used.add(path_i)
-        for path_j, hash_j in readable_hashes[i + 1:]:
-            if path_j in used:
-                continue
+    # Doublons visuels probables : union-find pour gérer les relations transitives.
+    readable_items = [(path, rec.average_hash) for path, rec in records_by_path.items() if rec.average_hash]
+    parent = list(range(len(readable_items)))
+
+    def find(index: int) -> int:
+        while parent[index] != index:
+            parent[index] = parent[parent[index]]
+            index = parent[index]
+        return index
+
+    def union(left: int, right: int) -> None:
+        left_root = find(left)
+        right_root = find(right)
+        if left_root != right_root:
+            parent[left_root] = right_root
+
+    for left in range(len(readable_items)):
+        for right in range(left + 1, len(readable_items)):
             try:
-                if hamming_distance(hash_i, hash_j) <= phash_threshold:
-                    group.append(path_j)
-                    used.add(path_j)
+                if hamming_distance(readable_items[left][1], readable_items[right][1]) <= phash_threshold:
+                    union(left, right)
             except ValueError:
                 continue
-        if len(group) > 1:
-            visual_groups.append(group)
-    report.visual_duplicate_groups = visual_groups
+
+    groups_by_root: Dict[int, List[str]] = defaultdict(list)
+    for index, (path, _) in enumerate(readable_items):
+        groups_by_root[find(index)].append(path)
+    report.visual_duplicate_groups = [group for group in groups_by_root.values() if len(group) > 1]
 
     metadata_records: List[Dict[str, Any]] = []
     metadata_errors: List[Dict[str, Any]] = []
@@ -262,11 +346,10 @@ def audit_dataset(
         report.metadata_errors.extend(metadata_errors)
 
     for record_index, record in enumerate(metadata_records):
-        problems = validate_record(record, nomenclature)
+        problems = validate_record(record, nomenclature, dataset_root)
         if problems:
             report.metadata_errors.append({"record_index": record_index, "problems": problems})
 
-    # Comptages par classe, source et ensemble.
     class_counter: Counter[str] = Counter()
     status_counter: Counter[str] = Counter()
     source_counter: Counter[str] = Counter()
@@ -293,14 +376,16 @@ def audit_dataset(
         for group_field in ("plant_id", "parcelle_id", "plant", "parcelle"):
             if record.get(group_field) and ensemble:
                 plant_to_splits[str(record.get(group_field))].add(str(ensemble))
-        image_path = record.get("fichier_image") or record.get("image_path") or record.get("path")
-        if image_path and ensemble:
-            resolved = Path(image_path)
-            if not resolved.is_absolute():
-                resolved = dataset_root / resolved
-            record_hash = records_by_path.get(str(resolved))
-            if record_hash and record_hash.average_hash:
-                phash_to_splits[record_hash.average_hash].add(str(ensemble))
+        image_name = record.get("fichier_image") or record.get("image_path") or record.get("path")
+        if image_name and ensemble:
+            try:
+                resolved = resolve_manifest_path(image_name, dataset_root)
+            except ValueError:
+                resolved = None
+            if resolved is not None and resolved in records_by_path:
+                record_hash = records_by_path[str(resolved)]
+                if record_hash.average_hash:
+                    phash_to_splits[record_hash.average_hash].add(str(ensemble))
 
     for image_id, splits in image_id_to_splits.items():
         if len(splits) > 1:
@@ -324,6 +409,8 @@ def audit_dataset(
         report.notes.append("Aucune image trouvée dans la racine fournie.")
     if metadata_path is None:
         report.notes.append("Aucun manifeste metadata.csv ou metadata.jsonl trouvé automatiquement.")
+    if skipped_symlinks:
+        report.notes.append("Liens symboliques ignorés pendant le parcours : {}".format(skipped_symlinks))
     if nomenclature:
         unknown_classes = sorted({r.get("classe") for r in metadata_records if r.get("classe") and r.get("classe") not in nomenclature})
         if unknown_classes:

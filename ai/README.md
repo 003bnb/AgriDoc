@@ -28,6 +28,17 @@ Espace de travail **exclusivement IA**. Ce dossier ne contient aucun code Androi
 - La licence commerciale de PlantVillage n'est pas vérifiée.
 - Les comptages d'images disponibles sont préliminaires et doivent être confirmés par `leaf_grouping` avant entraînement.
 
+## Installation et tests
+
+```bash
+python -m pip install Pillow
+python -m unittest ai.tests.test_audit_dataset
+python ai/tools/audit_dataset.py --dataset-root <dataset> --nomenclature ai/nomenclature/agridoc_v1_classes.json
+python ai/tools/check_manifest.py --manifest <manifest.csv> --nomenclature ai/nomenclature/agridoc_v1_classes.json
+```
+
+Les outils utilisent uniquement la bibliothèque standard Python et Pillow. Aucun dataset ni modèle n'est inclus dans le dépôt.
+
 ## Limites
 
 - Les scripts ne valident pas la qualité agronomique d'une annotation.

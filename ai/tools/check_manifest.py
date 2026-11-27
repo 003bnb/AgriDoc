@@ -31,6 +31,17 @@ def main() -> int:
     args = parser.parse_args()
 
     nomenclature = load_nomenclature(args.nomenclature) if args.nomenclature else {}
+    if args.dataset_root is not None and args.dataset_root.is_symlink():
+        result = {
+            "manifest": str(args.manifest),
+            "record_count": 0,
+            "error_count": 1,
+            "errors": [{"path": str(args.dataset_root), "error": "La racine du dataset est un lien symbolique : validation refusée."}],
+            "valid": False,
+        }
+        json.dump(result, sys.stdout, ensure_ascii=False, indent=2)
+        sys.stdout.write("\n")
+        return 1
     records, errors = load_metadata(args.manifest)
 
     all_errors = list(errors)
